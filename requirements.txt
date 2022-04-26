@@ -1,0 +1,9 @@
+boto3==1.21.40
+ffmpy==0.3.0
+librosa==0.9.1
+matplotlib==3.5.1
+opencv-python==4.5.5.64
+pandas==1.4.2
+seaborn==0.11.2
+SoundFile==0.10.3.post1
+tensorflow==2.8.0
