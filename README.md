@@ -1,6 +1,6 @@
 ## Acoustic Machine Learning
 
-This is a sample code base for running a very basic model on acoustic data. It consists of data either in a shorter duration (a few seconds), or long audio recordings that come with a metadata file for segmentation.
+This is the code base for running a very basic model on acoustic data based on my talk at Women in Data Science in Puget Sound, 2022. You can view the "Demystifying Acoustic Data for Dolphin Identification" slides [here](https://drive.google.com/file/d/1XU1lawZxnyl5oBEGfccrx5jPYj5ratUE/view?usp=sharing). It consists of data either in a shorter duration (a few seconds), or long audio recordings that come with a metadata file for segmentation.
 
 I did not add code for data augmentation here because it is usually specific to the domain and needs to be discussed with the domain experts. Note that with acoustic data and spectrograms, we can not simply augment files as if they were images (i.e., you shouldn't flip a spectrogram upside down :)!)
 
@@ -11,16 +11,16 @@ No code is perfect, so when you find a bug (a feature!), please let me know! If 
 ### Environment set up
 
 1. Clone or download this repository to your local computer.
-2. Unzip or change directory into the project folder.
-3. This setup is tested with python 3.9 on a mac. Create a new environment with `python -m virtualenv <env_name>`, `source <env_names>\bin\activate`, and `pip install -r <path_to_requirements.txt_file>`.
+2. Unzip and/or change directory into the project folder.
+3. This setup is tested with python 3.9 on a MacBook Pro running macOS Catalina. Create a new environment with `python -m virtualenv <env_name>`, `source <env_names>/bin/activate`, and `pip install -r <path_to_requirements.txt>`.
 
 
 ### Running the code
 Adjust parameters in `generate_config.py`, specifically, specify `train` or `test` mode at the bottom under
 ```
 # Mode for training/validation/testing/evaluation
-        'mode': 'train',  # 'train' or 'test' (evaluate)
-        'evaluate_after_training': True,  # to plot Confusion Matrix and loss plot
+    'mode': 'train',  # 'train' or 'test' (evaluate)
+    'evaluate_after_training': True,  # to plot confusion matrix and loss plot
 ```
 Then, in the root path
 ```
@@ -32,9 +32,9 @@ Note: If you don't want the code to regenerate spectrograms every time it runs t
 
 
 ### Orcas or Dolphins?
-I started this project with code I created previously on auditory data captured from patients with Parkinson's Disease. However those data are private and may not be shared outside. To show a mini data pipeline, I started with data from Orcasound Networks located in AWS S3. I have always wanted to volunteer my time with them so this was a nice way to familiarize myself with their work. My last work project was actually on dolphin identification, and our collaborators from Syracuse and WHOI have been most kind to support me in using their data for this talk. While I can't share the data here, they are considering open sourcing a labelled dataset to share with the community. I will update any links here if it becomes available. 
+I started this project with code I created previously on auditory data captured from patients with Parkinson's Disease. However those data are private and may not be shared externally. To show a mini data pipeline, I started with data from Orcasound Networks located in AWS S3. I have always wanted to volunteer my time with them so this was a nice way to familiarize myself with their work. My last work project was actually on dolphin identification, and our collaborators from Syracuse and WHOI have been most kind to support me in using their data for this talk. While I can't share the data here, they are considering open sourcing a labelled dataset to share with the community. I will update any links here if it becomes available. 
 
-To run Orcasound data, check out their website and github repo for the latest S3 location to obtain training and test data. You will want to update the input argument in main.py from "dolphins" to "orcas", and edit aws_s3.py to input the S3 bucket name and url. Once those are in place, running main.py will allow you to download data from the bucket.
+To run Orcasound data, check out their website and github repo (see presentation slides for the repo I've used) for the latest S3 location to obtain training and test data. You will want to update the input argument in main.py from "dolphins" to "orcas", and edit aws_s3.py to input the S3 bucket name and url. Once those are in place, running main.py will allow you to download data from the bucket.
 
 Steps:
 1. In main.py, update the input parameters from 
@@ -45,7 +45,7 @@ to
 
 `main(download_from_s3=True, extract_file=True, dataset='orcas')`
 
-I recommend doing `download_from_s3` and `extract_file` as a two-step process. This way you know which tar_file to untar and enter the file name in step 2 for `tar_file`.
+I recommend running `download_from_s3` and `extract_file` as a two-step process. This way you know which tar_file to untar and enter the file name in step 2 for `tar_file`.
 
 2. In generate_config.py, update the parameters to enable extra new data and specify the tar file you want to untar. 
 ```
