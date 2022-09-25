@@ -11,8 +11,6 @@ from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras import Sequential
 from tensorflow.keras import layers
 
-from acoustic_ml import custom_layer
-from acoustic_ml import custom_model
 from acoustic_ml import data_loader, data_loader_binary
 from acoustic_ml import visualization
 from acoustic_ml import model_fn
