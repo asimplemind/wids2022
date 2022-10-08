@@ -53,7 +53,26 @@ def untar_file(tar_file: Path) -> Path:
     try:
         with tarfile.open(tar_file, 'r') as t:
             print(f"Saving extract tar file to {os.path.join(os.path.dirname(tar_file), 'untar_data')}")
-            t.extractall(os.path.join(os.path.dirname(tar_file), 'untar_data'))
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(t, os.path.join(os.path.dirname(tar_file),"untar_data"))
             print(os.listdir(os.path.join(os.path.dirname(tar_file), 'untar_data')))
     except tarfile.ReadError as e:
         print(f"Error extracting tar file {e}")
